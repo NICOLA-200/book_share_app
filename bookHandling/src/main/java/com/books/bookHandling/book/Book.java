@@ -1,23 +1,20 @@
 package com.books.bookHandling.book;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import com.books.bookHandling.History.BookTransactionHistory;
+import com.books.bookHandling.feedback.Feedback;
+import com.books.bookHandling.user.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -36,23 +33,28 @@ public class Book {
     private boolean archived;
     private boolean shareable;
 
-    @Id
-    @GeneratedValue
-    private Integer id;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDate;
 
-    @LastModifiedDate
-    @Column(insertable = false)
-    private LocalDateTime lastModifiedDate;
+     @ManyToOne
+     @JoinColumn(name = "owner_id")
+     private User owner;
+    @OneToMany(mappedBy = "book")
+    private List<Feedback> feedbacks;
+    @OneToMany(mappedBy = "book")
+    private List<BookTransactionHistory> histories;
 
-    @CreatedBy
-    @Column(nullable = false, updatable = false)
-    private String createdBy;
+    @Transient
+    public double getRate() {
+        if (feedbacks == null || feedbacks.isEmpty()) {
+            return 0.0;
+        }
+        var rate = this.feedbacks.stream()
+                .mapToDouble(Feedback::getNote)
+                .average()
+                .orElse(0.0);
+        double roundedRate = Math.round(rate * 10.0) / 10.0;
 
-    @LastModifiedBy
-    @Column(insertable = false)
-    private String lastModifiedBy;
+        // Return 4.0 if roundedRate is less than 4.5, otherwise return 4.5
+        return roundedRate;
+    }
 }
