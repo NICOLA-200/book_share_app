@@ -2,6 +2,7 @@ package com.books.bookHandling.book;
 
 
 import com.books.bookHandling.History.BookTransactionHistory;
+import com.books.bookHandling.History.BookTransactionHistoryRepository;
 import com.books.bookHandling.common.PageResponse;
 import com.books.bookHandling.exception.OperationNotPermittedException;
 import com.books.bookHandling.user.User;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Objects;
 
+import static com.books.bookHandling.book.BookSpecification.withOwnerId;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -28,6 +31,7 @@ public class BookService {
 
     private final BookRepository bookRepository;
     private final BookMapper bookMapper;
+    private final BookTransactionHistoryRepository transactionHistoryRepository;
 
     public Integer save(BookRequest request, Authentication connectedUser) {
         User user = ((User) connectedUser.getPrincipal());
