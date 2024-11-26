@@ -2,6 +2,7 @@ package com.books.bookHandling.book;
 
 
 import com.books.bookHandling.History.BookTransactionHistory;
+import com.books.bookHandling.common.BaseEntity;
 import com.books.bookHandling.feedback.Feedback;
 import com.books.bookHandling.user.User;
 import jakarta.persistence.*;
@@ -23,7 +24,8 @@ import java.util.List;
 @NoArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class Book {
+@Entity
+public class Book extends BaseEntity {
 
     private String title;
     private String authorName;
