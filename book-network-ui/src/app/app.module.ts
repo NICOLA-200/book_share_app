@@ -1,10 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
-import {APP_INITIALIZER, NgModule} from '@angular/core';
-import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import { NgModule} from '@angular/core';
+import { HttpClient} from '@angular/common/http';
 import {LoginComponent} from './pages/login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -13,10 +14,10 @@ import {FormsModule} from '@angular/forms';
 
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
+    ReactiveFormsModule
 
   ],
   providers: [
