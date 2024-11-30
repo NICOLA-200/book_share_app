@@ -35,11 +35,14 @@ export class LoginComponent implements  OnInit {
         this.router.navigate(['books']);
       },
       error: (err) => {
-        console.log(err);
+        console.log(err.error);
         if (err.error.validationErrors) {
+
           this.errorMsg = err.error.validationErrors;
+          console.log(this.errorMsg)
         } else {
-          this.errorMsg.push(err.error.errorMsg);
+          this.errorMsg.push(err.error.error  );
+          console.log(this.errorMsg)
         }
       }
     });

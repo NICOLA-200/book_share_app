@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BookRoutingModule } from './book-routing.module';
 import {MenuComponent} from './components/menu/menu.component';
 import {MainComponent} from './pages/main/main.component';
+import {HttpClient} from '@angular/common/http';
 
 
 @NgModule({

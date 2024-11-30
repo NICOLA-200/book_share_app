@@ -36,7 +36,7 @@ export class RegisterComponent implements  OnInit{
     })
       .subscribe({
         next: () => {
-          this.router.navigate(['activate-account']);
+          this.router.navigate(['login']);
         },
         error: (err) => {
           this.errorMsg = err.error.validationErrors;
