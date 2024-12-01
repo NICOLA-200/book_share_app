@@ -322,4 +322,23 @@ export class BookService extends BaseService {
     );
   }
 
+  static readonly FindAllBorrowedBooksPath = '/books/borrowed';
+
+  findAllBorrowedBooks$Response(params?: FindAllBorrowedBooks$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseBorrowedBookResponse>> {
+    return findAllBorrowedBooks(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `findAllBorrowedBooks$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findAllBorrowedBooks(params?: FindAllBorrowedBooks$Params, context?: HttpContext): Observable<PageResponseBorrowedBookResponse> {
+    return this.findAllBorrowedBooks$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseBorrowedBookResponse>): PageResponseBorrowedBookResponse => r.body)
+    );
+  }
+
+
 }
