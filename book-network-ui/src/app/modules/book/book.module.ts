@@ -10,6 +10,7 @@ import {RatingComponent} from './components/rating/rating.component';
 import {ManageBookComponent} from './pages/manage-book/manage-book.component';
 import {FormsModule} from '@angular/forms';
 import {MyBooksComponent} from './pages/my-books/my-books.component';
+import {BookDetailsComponent} from './pages/book-details/book-details.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {MyBooksComponent} from './pages/my-books/my-books.component';
     MainComponent,
     MenuComponent,
     ManageBookComponent,
-    MyBooksComponent
+    MyBooksComponent,
+    BookDetailsComponent
   ],
   imports: [
     CommonModule,
