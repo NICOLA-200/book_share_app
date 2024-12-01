@@ -3,6 +3,7 @@ import {BookResponse} from '../../../../services/models/book-response';
 import {PageResponseFeedbackResponse} from '../../../../services/models/page-response-feedback-response';
 import {BookService} from '../../../../services/services/book.service';
 import {FeedbackService} from '../../../../services/services/feedback.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-book-details',
