@@ -24,6 +24,7 @@ import { findAllReturnedBooks } from '../fn/book/find-all-returned-books';
 import { FindAllReturnedBooks$Params } from '../fn/book/find-all-returned-books';
 import { findBookById } from '../fn/book/find-book-by-id';
 import { FindBookById$Params } from '../fn/book/find-book-by-id';
+import {findAllBorrowedBooks} from '../fn/book/find-all-borrowed-books';
 import { PageResponseBookResponse } from '../models/page-response-book-response';
 import { PageResponseBorrowedBookResponse } from '../models/page-response-borrowed-book-response';
 import { returnBorrowBook } from '../fn/book/return-borrow-book';
@@ -36,6 +37,7 @@ import { updateShareableStatus } from '../fn/book/update-shareable-status';
 import { UpdateShareableStatus$Params } from '../fn/book/update-shareable-status';
 import { uploadBookCoverPicture } from '../fn/book/upload-book-cover-picture';
 import { UploadBookCoverPicture$Params } from '../fn/book/upload-book-cover-picture';
+import {FindAllBorrowedBooks$Params} from '../fn/book/find-all-borrowed-books';
 
 @Injectable({ providedIn: 'root' })
 export class BookService extends BaseService {
@@ -321,5 +323,24 @@ export class BookService extends BaseService {
       map((r: StrictHttpResponse<PageResponseBookResponse>): PageResponseBookResponse => r.body)
     );
   }
+
+  static readonly FindAllBorrowedBooksPath = '/books/borrowed';
+
+  findAllBorrowedBooks$Response(params?: FindAllBorrowedBooks$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseBorrowedBookResponse>> {
+    return findAllBorrowedBooks(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `findAllBorrowedBooks$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  findAllBorrowedBooks(params?: FindAllBorrowedBooks$Params, context?: HttpContext): Observable<PageResponseBorrowedBookResponse> {
+    return this.findAllBorrowedBooks$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseBorrowedBookResponse>): PageResponseBorrowedBookResponse => r.body)
+    );
+  }
+
 
 }
