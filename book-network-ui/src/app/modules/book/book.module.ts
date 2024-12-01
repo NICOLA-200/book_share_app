@@ -9,6 +9,7 @@ import {BookCardComponent} from './components/book-card/book-card.component';
 import {RatingComponent} from './components/rating/rating.component';
 import {ManageBookComponent} from './pages/manage-book/manage-book.component';
 import {FormsModule} from '@angular/forms';
+import {MyBooksComponent} from './pages/my-books/my-books.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {FormsModule} from '@angular/forms';
     RatingComponent,
     MainComponent,
     MenuComponent,
-    ManageBookComponent
+    ManageBookComponent,
+    MyBooksComponent
   ],
   imports: [
     CommonModule,
