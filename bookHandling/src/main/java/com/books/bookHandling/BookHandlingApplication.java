@@ -11,8 +11,7 @@ import com.books.bookHandling.role.RoleRepository;
 
 @EnableAsync
 @SpringBootApplication
-//@EnableJpaAuditing(auditorAwareRef = "auditorAware")
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 public class BookHandlingApplication {
 
 	public static void main(String[] args) {
