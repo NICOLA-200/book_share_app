@@ -11,7 +11,7 @@ import {BorrowedBookListComponent} from './pages/borrowed-book-list/borrowed-boo
 
 const routes: Routes = [
   {
-    path: 'boo',
+    path: '',
     component: MainComponent,
     children: [
       {
@@ -20,7 +20,7 @@ const routes: Routes = [
 
       },
   {
-    path: '',
+    path: 'boo',
     component: BookListComponent,
     // canActivate: [authGuard]
   },
