@@ -4,11 +4,11 @@ import {LoginComponent} from './pages/login/login.component';
 import {RegisterComponent} from './pages/register/register.component';
 
 export const routes: Routes = [
-   {
-     path: '',
-    redirectTo: 'books',
-    pathMatch: 'full'
-   },
+   // {
+   //   path: '',
+   //  redirectTo: 'books',
+   //  pathMatch: 'full'
+   // },
   {
     path: 'login',
     component: LoginComponent
@@ -17,6 +17,10 @@ export const routes: Routes = [
     path: 'register',
     component: RegisterComponent
   },
+  // {
+  //   path: 'books',
+  //   component: RegisterComponent
+  // }
    {
      path: 'books',
      loadChildren: () => import('./modules/book/book.module').then(m => m.BookModule),

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {BookResponse} from '../../../../services/models/book-response';
 import {PageResponseFeedbackResponse} from '../../../../services/models/page-response-feedback-response';
 import {BookService} from '../../../../services/services/book.service';
@@ -11,7 +11,7 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.scss'
 })
-export class BookDetailsComponent {
+export class BookDetailsComponent implements OnInit {
 
   book: BookResponse = {};
   feedbacks: PageResponseFeedbackResponse = {};

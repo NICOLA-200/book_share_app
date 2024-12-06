@@ -11,11 +11,12 @@ import {BookResponse} from '../../../../services/models/book-response';
 })
 export class BookListComponent implements  OnInit{
 
-
   bookResponse: PageResponseBookResponse = {};
   page = 0;
   size = 5;
   pages: any = [];
+  message = '';
+  level: 'success' |'error' = 'success';
 
   constructor(
     private bookService: BookService,
@@ -28,7 +29,7 @@ export class BookListComponent implements  OnInit{
   }
 
   private findAllBooks() {
-    this.bookService.findAllBooksByOwner({
+    this.bookService.findAllBooks({
       page: this.page,
       size: this.size
     })
@@ -71,30 +72,26 @@ export class BookListComponent implements  OnInit{
     return this.page === this.bookResponse.totalPages as number - 1;
   }
 
-  archiveBook(book: BookResponse) {
-    this.bookService.updateArchivedStatus({
+  borrowBook(book: BookResponse) {
+    this.message = '';
+    this.level = 'success';
+    this.bookService.borrowBook({
       'book-id': book.id as number
     }).subscribe({
       next: () => {
-        book.archived = !book.archived;
+        this.level = 'success';
+        this.message = 'Book successfully added to your list';
+      },
+      error: (err) => {
+        console.log(err);
+        this.level = 'error';
+        this.message = err.error.error;
       }
     });
   }
 
-  shareBook(book: BookResponse) {
-    this.bookService.updateShareableStatus({
-      'book-id': book.id as number
-    }).subscribe({
-      next: () => {
-        book.shareable = !book.shareable;
-      }
-    });
+  displayBookDetails(book: BookResponse) {
+    this.router.navigate(['books', 'details', book.id]);
   }
-
-  editBook(book: BookResponse) {
-    this.router.navigate(['books', 'manage', book.id])
-      .catch(err => console.error(err));
-  }
-
 
 }

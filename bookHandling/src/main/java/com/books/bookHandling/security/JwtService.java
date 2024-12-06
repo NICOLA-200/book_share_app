@@ -6,7 +6,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
+
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -17,12 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
- @Service
+@Service
 public class JwtService {
-//    @Value("${application.security.jwt.secret-key}")
     private String secretKey = "e0CbZJ1L75eQDXcvet9cDFiXtIxw08uBXCppjVAGdz4=";
-//    @Value("${application.security.jwt.expiration}")
-    private long jwtExpiration = 86400;
+    private long jwtExpiration = 86400; // 24 hours in seconds
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -41,7 +40,7 @@ public class JwtService {
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
-        return buildToken(extraClaims, userDetails, jwtExpiration);
+        return buildToken(extraClaims, userDetails, jwtExpiration * 1000); // Convert to milliseconds
     }
 
     private String buildToken(
@@ -50,15 +49,16 @@ public class JwtService {
             long expiration
     ) {
         var authorities = userDetails.getAuthorities()
-                .stream().
-                map(GrantedAuthority::getAuthority)
+                .stream()
+                .map(GrantedAuthority::getAuthority)
                 .toList();
+
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration)) // Correct expiration handling
                 .claim("authorities", authorities)
                 .signWith(getSignInKey())
                 .compact();
@@ -81,6 +81,7 @@ public class JwtService {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSignInKey())
+                .setAllowedClockSkewSeconds(30) // Allow 30 seconds of clock skew
                 .build()
                 .parseClaimsJws(token)
                 .getBody();

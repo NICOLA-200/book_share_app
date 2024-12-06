@@ -32,7 +32,8 @@ export class LoginComponent implements  OnInit {
     }).subscribe({
       next: (res) => {
         this.tokenService.token = res.token as string;
-        this.router.navigate(['books']);
+        console.log("something")
+        this.router.navigate(['books/boo']).catch(err => console.error(err));
       },
       error: (err) => {
         console.log(err.error);
@@ -52,4 +53,4 @@ export class LoginComponent implements  OnInit {
     this.router.navigate(['register']).catch(r => console.error(r) );
   }
 }
-``
+
