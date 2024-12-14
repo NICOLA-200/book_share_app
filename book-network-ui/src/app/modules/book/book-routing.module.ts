@@ -13,6 +13,7 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    // canActivate: [authGuard],
     children: [
       {
         path: 'my-books',
@@ -28,7 +29,7 @@ const routes: Routes = [
   {
     path: 'my-borrowed-books',
      component: BorrowedBookListComponent,
-    canActivate: [authGuard]
+
   },
   {
     path: 'my-returned-books',
